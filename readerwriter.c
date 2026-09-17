@@ -40,7 +40,6 @@ void *reader(void *arg)
     return NULL;
 }
 
-
 void *writer(void *arg)
 {
     int id = *(int *)arg;
