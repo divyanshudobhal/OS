@@ -23,10 +23,8 @@ void *producer(void *arg)
     {
         item = i;
 
-        // Wait for an empty slot
         sem_wait(&empty);
 
-        // Enter critical section
         sem_wait(&mutex);
 
         buffer[in] = item;
@@ -34,10 +32,8 @@ void *producer(void *arg)
 
         in = (in + 1) % SIZE;
 
-        // Leave critical section
         sem_post(&mutex);
 
-        // Increase full slots
         sem_post(&full);
 
         sleep(1);
@@ -53,10 +49,8 @@ void *consumer(void *arg)
 
     for (int i = 1; i <= 10; i++)
     {
-        // Wait for a full slot
         sem_wait(&full);
 
-        // Enter critical section
         sem_wait(&mutex);
 
         item = buffer[out];
@@ -64,10 +58,8 @@ void *consumer(void *arg)
 
         out = (out + 1) % SIZE;
 
-        // Leave critical section
         sem_post(&mutex);
 
-        // Increase empty slots
         sem_post(&empty);
 
         sleep(1);
